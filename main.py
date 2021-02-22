@@ -7,15 +7,16 @@ import requests
 import discord
 
 ##############
-PATH = Path("/home/aurnytoraink/Projets/Code/Bot/Donvert/")
+PATH = Path("/home/aurnytoraink/Bot/Donvert/")
+# PATH = Path("/home/aurnytoraink/Projets/Code/Bot/Donvert/")
 
 if os.path.exists(PATH / 'files'):
     shutil.rmtree(PATH / "files")
 os.makedirs(PATH / "files")
 
-TOKEN = json.loads(open("config.json",'rb').read())["token"]
+TOKEN = json.loads(open(PATH/"config.json",'rb').read())["token"]
 
-ext_ref = ["doc","docx","odt","odf","odg","ods","ott","xls","xlsx","ppt","pptx"]
+ext_ref = ["doc","docx","odt","odf","odp","odg","ods","ott","xls","xlsx","ppt","pptx"]
 
 ##############
 client = discord.Client()
@@ -29,6 +30,9 @@ async def on_message(message):
     if message.author == client.user:
         return
     
+    if message.content == "ptdrtki?":
+        await message.channel.send("🤖**Bip! Bop!** Je m'appelle Disconvertion. Mon rôle est d'automatisé les convertions de documents en fichier PDF")
+
     if message.attachments != []:
         attachment = message.attachments[0]
         extension = attachment.filename.split(".")[-1]
@@ -38,10 +42,8 @@ async def on_message(message):
             with open(PATH/("files/"+attachment.filename),'xb') as f:
                 f.write(data)
 
-            print(PATH/("files/"+attachment.filename))
-            # os.system(f"libreoffice --headless --convert-to pdf \"{PATH/('files/'+attachment.filename)}\" --outdir \"{PATH/('files/'+output)}\"")
-            os.system(f"flatpak run org.libreoffice.LibreOffice --headless --convert-to pdf \"{PATH/('files/'+attachment.filename)}\" --outdir \"{PATH/('files/')}\"")
-            await message.channel.send(file=discord.File(PATH/('files/'+output)))
+            os.system(f"libreoffice --headless --convert-to pdf \"{PATH/('files/'+attachment.filename)}\" --outdir \"{PATH/('files/')}\"")
+            await message.channel.send("🤖**Bip! Bop!**\nVoici la version PDF :",file=discord.File(PATH/('files/'+output)))
 
             os.remove(PATH/("files/"+output))
             os.remove(PATH/("files/"+attachment.filename))
