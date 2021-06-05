@@ -31,7 +31,7 @@ async def on_message(message):
         return
     
     if message.content == "ptdrtki?":
-        await message.channel.send("🤖**Bip! Bop!** Je m'appelle Disconvertion. Mon rôle est d'automatisé les convertions de documents en fichier PDF")
+        await message.channel.send("🤖**Bip! Bop!** Je m'appelle Disconvertion. Mon rôle est d'automatiser les convertions de documents en fichier PDF")
 
     if message.attachments != []:
         attachment = message.attachments[0]
